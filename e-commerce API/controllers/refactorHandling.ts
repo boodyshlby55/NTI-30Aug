@@ -2,15 +2,25 @@ import { NextFunction, Request, Response } from 'express';
 import asyncHandler from 'express-async-handler';
 import { Model } from 'mongoose';
 import ApiErrors from '../utils/apiErrors';
+import Features from '../utils/features';
 
 export const getAll = <modelType>(model: Model<any>, modelName: string) =>
   asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
     let filterData: any = {};
+    let searchLength: number = 0;
     if (req.filterData) {
       filterData = req.filterData
     }
-    const documents: modelType[] = await model.find(filterData)
-    res.status(200).json({ data: documents })
+    if (req.query) {
+      const searchResult: Features = new Features(model.find(filterData), req.query).filter().search(modelName)
+      const searchData: modelType[] = await searchResult.mongooseQuery;
+      searchLength = searchData.length;
+    }
+    const documentsCount: number = searchLength || await model.find(filterData).countDocuments()
+    const features: Features = new Features(model.find(filterData), req.query).filter().sort().limitFields().search(modelName).pagination(documentsCount);
+    const { mongooseQuery, paginationResult } = features
+    const documents: modelType[] = await mongooseQuery;
+    res.status(200).json({ length: documents.length, pagination: paginationResult, data: documents })
   });
 
 export const getOne = <modelType>(model: Model<any>) =>
