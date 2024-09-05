@@ -1,5 +1,3 @@
-import { NextFunction, Request, Response } from "express";
-import asyncHandler from 'express-async-handler';
 import categoriesModel from "../models/categoriesModel";
 import { Categories } from "../interfaces/categories";
 import { createOne, deleteOne, getAll, getOne, updateOne } from "./refactorHandling";

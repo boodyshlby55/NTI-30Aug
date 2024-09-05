@@ -37,6 +37,6 @@ export const deleteOne = <modelType>(model: Model<any>) =>
   asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
     const document: modelType | null = await model.findByIdAndDelete(req.params.id);
     if (!document) { return next(new ApiErrors('Document not found', 404)) }
-    res.status(200).json({ data: document })
+    res.status(204).json()
   })
 
