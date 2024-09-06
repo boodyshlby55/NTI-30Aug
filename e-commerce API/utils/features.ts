@@ -16,6 +16,9 @@ class Features {
     this.mongooseQuery = this.mongooseQuery.find(JSON.parse(queryStr));
     return this;
   }
+  // subcategories -> filter {category:val}
+  // subcategories -> filter {sort:val}
+  // subcategories -> sort name
 
   sort() {
     if (this.queryString.sort) {

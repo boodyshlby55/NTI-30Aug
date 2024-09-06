@@ -5,6 +5,7 @@ import dbConnection from './config/db';
 import mountRoutes from './routes';
 const app: express.Application = express()
 app.use(express.json())
+app.use(express.static('uploads'))
 dotenv.config()
 
 dbConnection()

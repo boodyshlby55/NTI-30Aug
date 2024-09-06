@@ -1,11 +1,11 @@
 import { Router } from 'express';
-import { createProduct, deleteProduct, getAllProducts, getProduct, updateProduct } from '../controllers/products';
+import { createProduct, deleteProduct, getAllProducts, getProduct, resizeProductImages, updateProduct, uploadProductImages } from '../controllers/products';
 import { createProductValidator, deleteProductValidator, getProductValidator, updateProductValidator } from '../utils/validators/productsValidator';
 
 const productsRoute: Router = Router()
 productsRoute.route('/')
   .get(getAllProducts)
-  .post(createProductValidator, createProduct);
+  .post(uploadProductImages, resizeProductImages, createProductValidator, createProduct);
 
 productsRoute.route('/:id')
   .get(getProductValidator, getProduct)
