@@ -38,7 +38,7 @@ export const createOne = <modelType>(model: Model<any>) =>
 
 export const updateOne = <modelType>(model: Model<any>) =>
   asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
-    const document: modelType | null = await model.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const document = await model.findByIdAndUpdate(req.params.id, req.body, { new: true });
     if (!document) { return next(new ApiErrors('Document not found', 404)) }
     res.status(200).json({ data: document })
   })

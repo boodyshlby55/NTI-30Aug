@@ -16,6 +16,18 @@ const productsSchema: Schema = new Schema<Products>({
   subcategory: { type: Schema.Types.ObjectId, ref: 'subcategories' }
 }, { timestamps: true })
 
+// const imageUrl = (document: Products) => {
+//   if (document.cover) {
+//     document.cover = `${process.env.BASE_URL}/products/${document.cover}`
+//   }
+//   if (document.images) {
+//     document.images = document.images.map(image => `${process.env.BASE_URL}/products/${image}`)
+//   }
+// }
+
+// productsSchema.post<Products>('init', (document: Products) => { imageUrl(document) });
+// productsSchema.post<Products>('save', (document: Products) => { imageUrl(document) });
+
 productsSchema.pre<Products>(/^find/, function (next) {
   this.populate({ path: 'category', select: 'name' })
   this.populate({ path: 'subcategory', select: 'name' })
