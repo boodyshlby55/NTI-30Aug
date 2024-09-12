@@ -10,6 +10,13 @@ const usersSchema: Schema = new Schema<Users>({
   image: String,
   active: { type: Boolean, default: true },
   phone: { type: String },
+  wishlist: [{ type: Schema.Types.ObjectId, ref: 'products' }],
+  address: [{
+    street: String,
+    city: String,
+    state: String,
+    postalCode: String
+  }],
   resetCode: String,
   passwordChangedAt: Date,
   resetCodeExpireTime: Date,
