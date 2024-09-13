@@ -52,7 +52,7 @@ export const deleteReviewValidator: RequestHandler[] = [
       if (req.user.role === 'user') {
         const review = await reviewsModel.findById(val);
         if (review?.user._id!.toString() !== req.user._id.toString()) {
-          throw new Error('you can only update your review');
+          throw new Error('you can only delete your review');
         }
       }
       return true;

@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import asyncHandler from "express-async-handler";
 import bcrypt from 'bcryptjs';
 import crypto from 'crypto';
+import { rateLimit } from 'express-rate-limit'
 import usersModel from "../models/usersModel";
 import { Users } from "../interfaces/users";
 import ApiErrors from "../utils/apiErrors";
@@ -116,3 +117,8 @@ export const resetCode = asyncHandler(async (req: Request, res: Response, next: 
   await user.save({ validateModifiedOnly: true });
   res.status(200).json({ message: 'your password has been changed' });
 });
+
+export const limitRequest = rateLimit({
+  windowMs: 60 * 60 * 1000,
+  limit: 5
+})

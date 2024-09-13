@@ -23,10 +23,14 @@ export const getAll = <modelType>(model: Model<any>, modelName: string) =>
     res.status(200).json({ length: documents.length, pagination: paginationResult, data: documents })
   });
 
-export const getOne = <modelType>(model: Model<any>) =>
+export const getOne = <modelType>(model: Model<any>, populateOptions?: string) =>
   asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
-    const document: modelType | null = await model.findById(req.params.id);
-    if (!document) { return next(new ApiErrors('Document not found', 404)) }
+    let query = model.findById(req.params.id);
+    if (populateOptions) {
+      query = query.populate(populateOptions);
+    }
+    const document: modelType | null = await query;
+    if (!document) { return next(new ApiErrors(req.__('not_found'), 404)) }
     res.status(200).json({ data: document })
   })
 
@@ -40,12 +44,13 @@ export const updateOne = <modelType>(model: Model<any>) =>
   asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
     const document = await model.findByIdAndUpdate(req.params.id, req.body, { new: true });
     if (!document) { return next(new ApiErrors('Document not found', 404)) }
+    document.save();
     res.status(200).json({ data: document })
   })
 
 export const deleteOne = <modelType>(model: Model<any>) =>
   asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
-    const document: modelType | null = await model.findByIdAndDelete(req.params.id);
+    const document: modelType | null = await model.findOneAndDelete({ _id: req.params.id });
     if (!document) { return next(new ApiErrors('Document not found', 404)) }
     res.status(204).json()
   })
