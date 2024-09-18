@@ -118,7 +118,8 @@ export const resetCode = asyncHandler(async (req: Request, res: Response, next: 
   res.status(200).json({ message: 'your password has been changed' });
 });
 
-export const limitRequest = rateLimit({
+export const authLimit = rateLimit({
   windowMs: 60 * 60 * 1000,
-  limit: 5
+  limit: 5,
+  message: 'try again later'
 })

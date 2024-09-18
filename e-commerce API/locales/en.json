@@ -1,3 +1,4 @@
 {
-  "invalid_id": "invalid mongo id"
+	"invalid_id": "invalid mongo id",
+	"not_found": "document not found"
 }
