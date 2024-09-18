@@ -43,7 +43,7 @@ export const createOne = <modelType>(model: Model<any>) =>
 export const updateOne = <modelType>(model: Model<any>) =>
   asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
     const document = await model.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    if (!document) { return next(new ApiErrors('Document not found', 404)) }
+    if (!document) { return next(new ApiErrors(req.__('not_found'), 404)) }
     document.save();
     res.status(200).json({ data: document })
   })
@@ -51,7 +51,6 @@ export const updateOne = <modelType>(model: Model<any>) =>
 export const deleteOne = <modelType>(model: Model<any>) =>
   asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
     const document: modelType | null = await model.findOneAndDelete({ _id: req.params.id });
-    if (!document) { return next(new ApiErrors('Document not found', 404)) }
+    if (!document) { return next(new ApiErrors(req.__('not_found'), 404)) }
     res.status(204).json()
   })
-
