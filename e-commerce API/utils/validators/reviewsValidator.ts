@@ -1,7 +1,6 @@
 import { RequestHandler } from "express";
 import { check } from "express-validator";
 import validatorMiddleware from "../../middlewares/validatorMiddleware";
-import categoriesModel from "../../models/categoriesModel";
 import reviewsModel from "../../models/reviewsModel";
 
 export const createReviewValidator: RequestHandler[] = [
