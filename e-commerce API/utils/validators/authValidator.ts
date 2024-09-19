@@ -1,7 +1,6 @@
 import { RequestHandler } from "express";
 import { check } from "express-validator";
 import validatorMiddleware from "../../middlewares/validatorMiddleware";
-import categoriesModel from "../../models/categoriesModel";
 import usersModel from "../../models/usersModel";
 
 export const signupValidator: RequestHandler[] = [
@@ -31,7 +30,7 @@ export const signupValidator: RequestHandler[] = [
   check('confirmPassword')
     .notEmpty().withMessage('password is required')
     .isLength({ min: 6, max: 20 }).withMessage('password length from 6 to 20 char'),
-  check('phone').optional().isMobilePhone(['ar-EG']),
+  check('phone').optional().isMobilePhone(['ar-EG']).withMessage('invalid phone number'),
   validatorMiddleware
 ];
 

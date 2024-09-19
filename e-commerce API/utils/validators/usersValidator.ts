@@ -2,7 +2,6 @@ import { RequestHandler } from "express";
 import { check } from "express-validator";
 import validatorMiddleware from "../../middlewares/validatorMiddleware";
 import bcrypt from 'bcryptjs';
-import categoriesModel from "../../models/categoriesModel";
 import usersModel from "../../models/usersModel";
 
 export const createUserValidator: RequestHandler[] = [

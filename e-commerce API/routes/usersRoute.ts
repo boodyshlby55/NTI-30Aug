@@ -6,7 +6,7 @@ import { allowedTo, checkActive, protectRoutes } from '../controllers/auth';
 const usersRoute: Router = Router()
 usersRoute.use(protectRoutes, checkActive);
 usersRoute.get('/me', setUserId, getUser)
-usersRoute.put('/updateMe', updateLoggedUserValidator, updateLoggedUser)
+usersRoute.put('/updateMe', uploadUserImage, resizeUserImage, updateLoggedUserValidator, updateLoggedUser)
 usersRoute.put('/changeMyPassword', changeLoggedUserPasswordValidator, changeLoggedUserPassword)
 usersRoute.delete('/deleteMe', allowedTo('user'), deleteUserValidator, setUserId, deleteUser)
 
