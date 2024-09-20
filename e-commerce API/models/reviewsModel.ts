@@ -14,7 +14,6 @@ reviewsSchema.statics.calcRatingAndQuantity = async function (productId) {
     { $match: { product: productId } },
     { $group: { _id: 'product', avgRating: { $avg: '$rate' }, ratingQuantity: { $sum: 1 } } }
   ]);
-  console.log(result);
   if (result.length > 0) {
     await productsModel.findByIdAndUpdate(productId, {
       ratingAverage: result[0].avgRating,
