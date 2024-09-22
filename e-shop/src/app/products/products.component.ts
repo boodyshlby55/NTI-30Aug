@@ -6,6 +6,7 @@ import { Pagination } from '../interfaces/pagination';
 import { DescriptionPipe } from '../pipes/description.pipe';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { CartService } from '../services/cart.service';
 
 @Component({
   selector: 'app-products',
@@ -23,7 +24,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
   page: number = 1;
   sort: string = '-createdAt'
   search: string = '';
-  constructor(private _ProductsService: ProductsService) { }
+  constructor(private _ProductsService: ProductsService, private _CartService: CartService) { }
 
   loadProducts() {
     this.subscription = this._ProductsService.getAllProducts(this.limit, this.page, this.sort, this.search)
@@ -34,6 +35,13 @@ export class ProductsComponent implements OnInit, OnDestroy {
         },
         error: (err) => { }
       })
+  }
+
+  addToCart(productId: string) {
+    this._CartService.addToCart(productId).subscribe({
+      next: (res) => { alert('product added to your cart') },
+      error: (err) => { }
+    })
   }
 
   changePage(page: number) {

@@ -4,6 +4,7 @@ import { ProductsService } from '../services/products.service';
 import { RouterLink } from '@angular/router';
 import { Products } from '../interfaces/products';
 import { DescriptionPipe } from '../pipes/description.pipe';
+import { CartService } from '../services/cart.service';
 
 @Component({
   selector: 'app-best-seller',
@@ -16,11 +17,18 @@ export class BestSellerComponent implements OnInit, OnDestroy {
   subscription: any;
   products: Products[] = [];
   imgDomain: string = '';
-  constructor(private _ProductsService: ProductsService) { }
+  constructor(private _ProductsService: ProductsService, private _CartService: CartService) { }
 
   loadProducts() {
     this.subscription = this._ProductsService.getAllProducts(16, 1, '-sold', '').subscribe({
       next: (res) => { this.products = res.data },
+      error: (err) => { }
+    })
+  }
+
+  addToCart(productId: string) {
+    this._CartService.addToCart(productId).subscribe({
+      next: (res) => { alert('product added to your cart') },
       error: (err) => { }
     })
   }

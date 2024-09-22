@@ -10,7 +10,7 @@
       <p class="card-text">{{product?.ratingAverage|number:'1.1-1'}} &star; - count {{product?.ratingCount}}</p>
       <div class="position-absolute btn-card">
         <a [routerLink]="['/products',product._id]" class="btn btn-primary mx-2">See More</a>
-        <button class="btn btn-success mx-2">Add to Cart</button>
+        <button (click)="addToCart(product._id!)" class="btn btn-success mx-2">Add to Cart</button>
       </div>
     </div>
   </div>

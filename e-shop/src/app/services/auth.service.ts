@@ -14,7 +14,7 @@ export class AuthService {
   private authRoute: string = '';
   private apiKey: string = '';
   currentUser = new BehaviorSubject(null);
-  authPhoto: string = 'images/phone.svg'
+  authPhoto: string = 'phone.svg'
   constructor(private _GlobalService: GlobalService, private _HttpClient: HttpClient, private _Router: Router) {
     this.baseUrl = this._GlobalService.baseUrl;
     this.authRoute = this._GlobalService.authRoute;

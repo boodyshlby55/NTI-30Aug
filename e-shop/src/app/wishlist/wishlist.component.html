@@ -1,3 +1,4 @@
+@if(length>0){
 <div class="cart-wrap">
   <div class="container">
     <div class="row">
@@ -15,23 +16,25 @@
               </tr>
             </thead>
             <tbody>
+              @for(product of wishlist; track product){
               <tr>
                 <td width="45%">
                   <div class="display-flex align-center">
                     <div class="img-product">
-                      <img src="productImage+product?.cover" alt="product?.name" class="mCS_img_loaded">
+                      <img [src]="productImage+product.cover" [alt]="product.name" class="mCS_img_loaded">
                     </div>
                     <div class="name-product">
-                      product?.name
+                      {{product.name}}
                     </div>
                   </div>
                 </td>
-                <td width="15%">product?.subcategory?.name</td>
-                <td width="15%">product?.price|currency</td>
-                <td width="15%"><button class="btn btn-danger rounded-5">Add to
+                <td width="15%">{{product.subcategory?.name}}</td>
+                <td width="15%">{{product.price|currency:'EUR'}}</td>
+                <td width="15%"><button (click)="addToCart(product._id!)" class="btn btn-danger rounded-5">Add to
                     Cart</button></td>
-                <td width="10%"><button class="trash-icon nav-link"><i class="far fa-trash-alt"></i></button></td>
+                <td width="10%"><button (click)="deleteFromWishlist(product._id!)" class="trash-icon nav-link"><i class="far fa-trash-alt"></i></button></td>
               </tr>
+              }
             </tbody>
           </table>
         </div>
@@ -39,3 +42,6 @@
     </div>
   </div>
 </div>
+}@else(){
+<h1 class="text-danger text-center m-5 p-5">you don't have any product in wishlist</h1>
+}
