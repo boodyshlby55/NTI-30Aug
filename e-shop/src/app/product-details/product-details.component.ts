@@ -5,6 +5,8 @@ import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ReviewsService } from '../services/reviews.service';
+import { CartService } from '../services/cart.service';
+import { WishlistService } from '../services/wishlist.service';
 
 @Component({
   selector: 'app-product-details',
@@ -25,12 +27,26 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   });
 
   constructor(private _ProductsService: ProductsService, private _ReviewsService: ReviewsService,
-    private _ActivatedRoute: ActivatedRoute) { }
+    private _CartService: CartService, private _WishlistService: WishlistService, private _ActivatedRoute: ActivatedRoute) { }
 
   loadProduct(productId: string) {
     this.subscription = this._ProductsService.getProduct(productId).subscribe({
       next: (res) => { this.product = res.data },
       error: (err) => { },
+    })
+  }
+
+  addToCart(productId: string) {
+    this._CartService.addToCart(productId).subscribe({
+      next: (res) => { alert('product added to your cart') },
+      error: (err) => { }
+    })
+  }
+
+  addToWishlist(productId: string) {
+    this._WishlistService.addToWishlist(productId).subscribe({
+      next: (res) => { alert('product added to wishlist') },
+      error: (err) => { alert('please login first') }
     })
   }
 

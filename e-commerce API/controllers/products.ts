@@ -26,7 +26,7 @@ export const resizeProductImages = asyncHandler(async (req: Request, res: Respon
         .resize(500, 500)
         .toFormat('webp')
         .webp({ quality: 95 })
-        .toFile(`uploads/products/${imgName}`)
+        .toFile(`uploads/images/products/${imgName}`)
       req.body.cover = imgName;
     }
     if (req.files.images) {
