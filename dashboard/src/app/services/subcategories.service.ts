@@ -10,10 +10,12 @@ import Cookies from 'js-cookie';
 export class SubcategoriesService {
 
   private baseUrl: string = '';
+  private categoriesRoute: string = '';
   private subcategoryRoute: string = '';
   private apiKey: string = '';
   constructor(private _GlobalService: GlobalService, private _HttpClient: HttpClient) {
     this.baseUrl = this._GlobalService.baseUrl;
+    this.categoriesRoute = _GlobalService.categoriesRoute;
     this.subcategoryRoute = this._GlobalService.subcategoriesRoute;
     this.apiKey = this._GlobalService.apiKey;
   }
@@ -25,6 +27,15 @@ export class SubcategoriesService {
       withCredentials: true
     })
   };
+
+  getAllFilter(categoryId: string): Observable<any> {
+    return this._HttpClient.get(`${this.baseUrl}${this.categoriesRoute}/${categoryId}/subcategories?limit=200&sort=name`, {
+      headers: {
+        'X-API-KEY': this.apiKey,
+      },
+      withCredentials: true
+    })
+  }
 
   getOne(categoryId: string): Observable<any> {
     return this._HttpClient.get(`${this.baseUrl}${this.subcategoryRoute}/${categoryId}`, {

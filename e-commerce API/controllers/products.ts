@@ -32,11 +32,11 @@ export const resizeProductImages = asyncHandler(async (req: Request, res: Respon
     if (req.files.images) {
       req.body.images = [];
       await Promise.all(req.files.images.map(async (image: any, index: number) => {
-        const imgName = `product-${Date.now()}N${index}-.webp`;
+        const imgName = `product-${Date.now()}N${index + 1}.webp`;
         await sharp(image.buffer)
           .toFormat('webp')
           .webp({ quality: 95 })
-          .toFile(`uploads/products/${imgName}`);
+          .toFile(`uploads/images/products/${imgName}`);
         req.body.images.push(imgName);
       }))
     }
